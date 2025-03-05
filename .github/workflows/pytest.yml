@@ -3,7 +3,7 @@ name: Test/Coverage with Python
 on:
   push:
     branches:
-      - main
+      - "*"
   pull_request:
     branches:
       - "*"
@@ -30,4 +30,10 @@ jobs:
         run: pip install pytest pytest-cov
 
       - name: Run tests
-        run: pytest
+        run: pytest --cov-branch --cov-report=xml
+        
+      - name: Upload coverage reports to Codecov                                                                                                                                     
+        uses: codecov/codecov-action@v5.4.0                                                                                                                                          
+        with:                                                                                                                                                                        
+          token: ${{ secrets.CODECOV_TOKEN }}                                                                                                                                        
+          slug: aleph-im/pytezos-crypto

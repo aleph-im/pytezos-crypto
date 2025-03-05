@@ -21,59 +21,12 @@ pip install pytezos-crypto
 This fork only includes the essential cryptographic dependencies:
 
 - `base58`
-- `importlib-metadata`
 - `mnemonic`
-- `pynacl`
-- `python-magic`
+- `libnacl`
 - `coincurve`
-- `typing_extensions`
 - `fastecdsa`
-- `pysodium`
 
-## Comparison with Upstream Dependencies
-
-The upstream `pytezos` project has a much broader set of dependencies, supporting a variety of additional features beyond cryptography, including container management, CLI tools, and notebook integrations. Here is a breakdown of the differences:
-
-### Dependencies in `pytezos-crypto` (this fork):
-- `base58`
-- `importlib-metadata`
-- `mnemonic`
-- `pynacl`
-- `python-magic`
-- `coincurve`
-- `typing_extensions`
-- `fastecdsa`
-- `pysodium`
-
-### Additional Dependencies in the Upstream Project:
-- **Python version constraint**: `python >= 3.8.1`
-- **CLI and utility dependencies**: 
-  - `click`
-  - `tqdm`
-- **Development and container-related tools**: 
-  - `docker`
-  - `notebook`
-  - `testcontainers`
-- **Data manipulation and validation libraries**: 
-  - `attrs`
-  - `cattrs`
-  - `jsonschema`
-  - `simplejson`
-  - `strict-rfc3339`
-  - `tabulate`
-- **Cryptography-related extensions**:
-  - `cryptography`
-  - `py-ecc`
-  - `deprecation`
-  - `ply`
-- **Networking and API libraries**:
-  - `requests`
-  - `netstruct`
-  - `python-dateutil`
-- **Specialized serialization**:
-  - `simple-bson`
-
-The upstream project is suited for broader use cases such as Tezos contract management, testing, and development environments, which require additional dependencies. In contrast, `pytezos-crypto` focuses strictly on cryptographic functionalities, reducing complexity and improving performance for users needing only the core cryptographic tools.
+The [upstream pytezos project](https://github.com/baking-bad/pytezos) has a much broader set of dependencies, supporting a variety of additional features beyond cryptography, including container management, CLI tools, and notebook integrations.
 
 ## Usage
 
@@ -81,5 +34,5 @@ For usage details, refer to the [original pytezos documentation](https://github.
 
 ## License
 
-This project follows the same license as the original `pytezos` project. See the [LICENSE](LICENSE) file for more details.
+This project follows the same MIT license as the original `pytezos` project. See the [LICENSE](LICENSE) file for more details.
 ```

@@ -4,16 +4,12 @@ import json
 from getpass import getpass
 from hashlib import blake2b
 from os import environ as env
-from os.path import abspath
-from os.path import expanduser
-from os.path import join
-from typing import List
-from typing import Optional
-from typing import Union
+from os.path import abspath, expanduser, join
+from typing import List, Optional, Union
 
 from mnemonic import Mnemonic
 
-from pytezos_crypto.crypto.encoding import base58_decode, scrub_input, base58_encode
+from pytezos_crypto.encoding import base58_decode, base58_encode, scrub_input
 
 VALID_MNEMONIC_LENGTHS = [12, 15, 18, 21, 24]
 DEFAULT_LANGUAGE = 'english'
@@ -114,12 +110,12 @@ class Key:
         self.activation_code = activation_code
 
     def __repr__(self) -> str:
-        res = [
+        res: list[str] = [
             super().__repr__(),
             '\nPublic key hash',
             self.public_key_hash(),
             '\nClass',
-            self.__class__,
+            str(self.__class__),
         ]
         return '\n'.join(res)
 

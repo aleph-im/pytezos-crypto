@@ -1,3 +1,4 @@
+---
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
@@ -9,12 +10,13 @@ sphinx:
   configuration: docs/conf.py
 
 # Build documentation with MkDocs
-#mkdocs:
+# mkdocs:
 #  configuration: mkdocs.yml
 
 # Optionally build your docs in additional formats such as PDF
 formats:
   - pdf
+
 
 python:
   version: 3.8

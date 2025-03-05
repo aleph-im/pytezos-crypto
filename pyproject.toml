@@ -1,9 +1,201 @@
 [build-system]
-# AVOID CHANGING REQUIRES: IT WILL BE UPDATED BY PYSCAFFOLD!
-requires = ["setuptools>=46.1.0", "setuptools_scm[toml]>=5", "wheel"]
-build-backend = "setuptools.build_meta"
+build-backend = "hatchling.build"
+requires = [ "hatch-vcs", "hatchling" ]
 
-[tool.setuptools_scm]
-# For smarter version schemes and other configuration options,
-# check out https://github.com/pypa/setuptools_scm
-version_scheme = "no-guess-dev"
+[project]
+name = "pytezos-crypto"
+description = "Cryptographic utilities from PyTezos"
+readme = "README.md"
+keywords = [ "blockchain", "crypto", "cryptocurrencies", "sdk", "tezos" ]
+license = "MIT"
+maintainers = [
+  { name = "Hugo Herter", email = "git@hugoherter.com" },
+]
+authors = [
+  { name = "Michael Zaikin", email = "mz@baking-bad.org" },
+  { name = "Lev Gorodetskii", email = "pytezos@drsr.io" },
+  { name = "Igor Sereda", email = "sereda.igor.s@gmail.com" },
+  { name = "Arthur Breitman", email = "" },
+  { name = "Roman Serikov", email = "" },
+  { name = "Olivier Desenfans", email = "desenfans.olivier@gmail.com" },
+  { name = "Hugo Herter", email = "git@hugoherter.com" },
+]
+requires-python = ">=3.9"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
+]
+dynamic = [ "version" ]
+
+dependencies = [
+  "base58",
+  "coincurve>=20",
+  "fastecdsa",
+  "libnacl",
+  "mnemonic",
+]
+
+optional-dependencies.testing = [
+  "pytest",
+  "pytest-cov",
+]
+urls.Issues = "https://github.com/aleph-im/pytezos-crypto/issues"
+urls.Source = "https://github.com/aleph-im/pytezos-crypto"
+repository = "https://github.com/aleph-im/pytezos-crypto"
+packages = [
+  { include = "pytezos_crypto", from = "src" },
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = [ "src/pytezos_crypto" ]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.envs.default]
+platforms = [ "linux" ]
+
+[tool.hatch.envs.testing]
+type = "virtual"
+system-packages = true
+dependencies = [
+  "pytest==8.2.1",
+  "pytest-cov==5.0.0",
+  "pytest-mock==3.14.0",
+  "pytest-asyncio==0.23.7",
+  "pytest-aiohttp==1.0.5",
+]
+
+[tool.hatch.envs.testing.scripts]
+test = "pytest ./src ./tests {args:tests}"
+
+cov = [
+  "pytest --cov --cov-report=xml ./src ./tests --durations=10 {args:tests}",
+]
+
+[[tool.hatch.envs.all.matrix]]
+python = [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
+
+[tool.hatch.envs.linting]
+detached = true
+dependencies = [
+  "mypy==1.8.0",
+  "ruff==0.4.6",
+  "isort==5.13.2",
+  "yamlfix==1.16.1",
+  "pyproject-fmt==2.2.1",
+]
+
+[tool.hatch.envs.linting.scripts]
+typing = "mypy {args:src/pytezos_crypto/ tests/}"
+style = [
+  #  "ruff format --diff {args:.}",
+  "isort --check-only --profile black {args:.}",
+  "yamlfix --check .",
+  "pyproject-fmt --check pyproject.toml",
+]
+fmt = [
+  #  "ruff format {args:.}",
+  "isort --profile black {args:.}",
+  "yamlfix .",
+  "pyproject-fmt pyproject.toml",
+  "style",
+]
+all = [
+  "style",
+  "typing",
+]
+
+[tool.black]
+target-version = [ "py39" ]
+line-length = 120
+
+[tool.ruff]
+target-version = "py39"
+line-length = 120
+src = [ "src" ]
+lint.select = [
+  "A",
+  "ARG",
+  "B",
+  "C",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "FBT",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "Q",
+  "RUF",
+  "S",
+  "T",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+lint.ignore = [
+  "ISC001",
+  "S101",
+]
+
+lint.per-file-ignores."tests/**/*" = [ "PLR2004", "S101", "TID252" ]
+
+[tool.isort]
+profile = "black"
+extra_standard_library = [ "packaging" ]
+
+[tool.pytest.ini_options]
+pythonpath = [ "src" ]
+testpaths = [ "tests" ]
+
+[tool.coverage.run]
+source_pkgs = [ "pytezos_crypto", "tests" ]
+branch = true
+parallel = true
+omit = [ "src/pytezos_crypto/__about__.py" ]
+
+[tool.coverage.paths]
+pytezos_crypto = [ "src/pytezos_crypto" ]
+tests = [ "tests" ]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.mypy]
+python_version = "3.9"
+install_types = true
+non_interactive = true
+ignore_missing_imports = true
+explicit_package_bases = true
+check_untyped_defs = true
+
+[tool.yamlfix]
+sequence_style = "keep_style"
+preserve_quotes = true
+whitelines = 1
+section_whitelines = 2

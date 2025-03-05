@@ -1,4 +1,4 @@
-from aleph_pytezos.crypto.key import Key
+from pytezos_crypto.crypto.key import Key
 
 
 def test_derive_public_key_from_encoded():

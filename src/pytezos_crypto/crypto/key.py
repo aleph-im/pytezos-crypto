@@ -13,7 +13,7 @@ from typing import Union
 
 from mnemonic import Mnemonic
 
-from aleph_pytezos.crypto.encoding import base58_decode, scrub_input, base58_encode
+from pytezos_crypto.crypto.encoding import base58_decode, scrub_input, base58_encode
 
 VALID_MNEMONIC_LENGTHS = [12, 15, 18, 21, 24]
 DEFAULT_LANGUAGE = 'english'

@@ -13,7 +13,7 @@ This project is not intended to diverge from the upstream. Please submit all pro
 ## Installation
 
 ```bash
-pip install aleph-pytezos
+pip install pytezos-crypto
 ```
 
 ## Dependencies

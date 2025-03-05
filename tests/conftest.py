@@ -1,5 +1,5 @@
 """
-    Dummy conftest.py for aleph_pytezos.
+    Dummy conftest.py for pytezos_crypto.
 
     If you don't know what this is for, just leave it empty.
     Read more about conftest.py under:
